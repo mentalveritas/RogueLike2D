@@ -32,7 +32,7 @@ public class BoardManager : MonoBehaviour
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
     public GameObject[] foodTiles;
-    public GameObject[] enemyTiels;
+    public GameObject[] enemyTiles;
     public GameObject[] outerWallTiles;
 
     //for fold hierarchy objects
@@ -103,14 +103,23 @@ public class BoardManager : MonoBehaviour
 
     }
 
+    //Set up Scene and called by GameManger
+    public void SetupScene(int level)
+    {
+        //Making floor tile map
+        BoardSetup();
+        //Setting list clear and build list attribute
+        InitialiseList();
+        //Making Random Objects
+        LayoutObjectAtRandom(wallTiles, wallCount.minimum, wallCount.maximum);
+        LayoutObjectAtRandom(foodTiles, foodCount.minimum, foodCount.maximum);
+        //Control enemy count by level log function
+        int enemyCount = (int)Mathf.Log(level, 2f);
+        LayoutObjectAtRandom(enemyTiles, enemyCount, enemyCount);
+        //Exit prefab
+        Instantiate(exit, new Vector3(columns - 1, rows - 1, 0f), Quaternion.identity);
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
+
+
 }
